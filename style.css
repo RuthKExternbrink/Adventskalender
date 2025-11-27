@@ -18,7 +18,9 @@
   padding: 14px 26px;
   border-radius: 999px;
   border: none;
-/* hier kannst du die Farbe ändern. Siehe "Hex-Code-Video" muahaahaha - es changiert zwischen zwei Farben - die mit # beginnen */ 
+/* hier kannst du die Farbe ändern. 
+  Siehe "Hex-Code-Video" muahaahaha - es changiert zwischen zwei Farben - die mit # beginnen */ 
+  
   background: linear-gradient(135deg, #ff00d9, #ff6cf5);
   color: #fff;
   font-weight: 700;
