@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bester Adventskalender ever!</title></title>
+  <title>Bester Adventskalender ever!</title>
   <link rel="stylesheet" href="style.css">
 </head>
   <body>
     <div class="hero">
-      <h1>2. Dezember</h1>
+      <h1>1. Dezember</h1>
       <button id="audioButton" class="audio-btn">🎵 Drück mich</button>
-      <audio id="audio" src="02Dezember.wav"></audio>
+      <audio id="audio" src="01Dezember.wav"></audio>
     </div>
     <script>
       const btn   = document.getElementById('audioButton');
@@ -20,11 +20,11 @@
         if (audio.paused) {
           audio.play();
           btn.classList.add('playing');
-          btn.textContent = '⏸ Pause Jingle';
+          btn.textContent = '⏸ Stop mich';
         } else {
           audio.pause();
           btn.classList.remove('playing');
-          btn.textContent = '🎵 Play Jingle';
+          btn.textContent = '🎵 Drück mich';
         }
       });
     </script>
