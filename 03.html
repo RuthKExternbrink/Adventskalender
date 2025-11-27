@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bester Adventskalender ever!</title></title>
+  <title>Bester Adventskalender ever!</title>
   <link rel="stylesheet" href="style.css">
 </head>
   <body>
@@ -20,11 +20,11 @@
         if (audio.paused) {
           audio.play();
           btn.classList.add('playing');
-          btn.textContent = '⏸ Pause Jingle';
+          btn.textContent = '⏸ Stop mich';
         } else {
           audio.pause();
           btn.classList.remove('playing');
-          btn.textContent = '🎵 Play Jingle';
+          btn.textContent = '🎵 Drück mich';
         }
       });
     </script>
