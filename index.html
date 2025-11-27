@@ -271,51 +271,50 @@
     </div>
   </div>
   <script>
-<script>
-  if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
 
-    const doors = document.querySelectorAll('.door');
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    let buffer = null;
+      const doors = document.querySelectorAll('.door');
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      let buffer = null;  
 
-    fetch('chime.mp3')
-      .then(response => response.arrayBuffer())
-      .then(data => audioContext.decodeAudioData(data))
-      .then(decoded => {
-        buffer = decoded;
-        initDoors();
-      })
-      .catch(err => console.error('Audio konnte nicht geladen werden:', err));
+      fetch('chime.mp3')
+        .then(response => response.arrayBuffer())
+        .then(data => audioContext.decodeAudioData(data))
+        .then(decoded => {
+          buffer = decoded;
+          initDoors();
+        })
+        .catch(err => console.error('Audio konnte nicht geladen werden:', err));
 
-    function playForDoor(index) {
-      if (!buffer) return;
+      function playForDoor(index) {
+        if (!buffer) return;  
 
       // Semitöne: 0 für Tür 1, 1 für Tür 2, ...
-      const semitones = index;
-      const rate = Math.pow(2, semitones / 12); // 2^(n/12)
+        const semitones = index;
+        const rate = Math.pow(2, semitones / 12); // 2^(n/12)
 
-      const source = audioContext.createBufferSource();
-      source.buffer = buffer;
-      source.playbackRate.value = rate;
-      source.connect(audioContext.destination);
+        const source = audioContext.createBufferSource();
+        source.buffer = buffer;
+        source.playbackRate.value = rate;
+        source.connect(audioContext.destination);
 
       // iOS braucht manchmal ein Resume nach User-Interaktion
-      if (audioContext.state === 'suspended') {
-        audioContext.resume().then(() => source.start(0));
-      } else {
-        source.start(0);
+        if (audioContext.state === 'suspended') {
+          audioContext.resume().then(() => source.start(0));
+        } else {
+          source.start(0);
+        }
+      }
+
+      function initDoors() {
+        doors.forEach((door, index) => {
+          door.addEventListener('mouseenter', () => {
+            playForDoor(index);   // index = 0…23 → immer höher
+          });
+        // Kein Stop nötig: kurzer Sample läuft einfach zu Ende
+        });
       }
     }
-
-    function initDoors() {
-      doors.forEach((door, index) => {
-        door.addEventListener('mouseenter', () => {
-          playForDoor(index);   // index = 0…23 → immer höher
-        });
-        // Kein Stop nötig: kurzer Sample läuft einfach zu Ende
-      });
-    }
-  }
   </script>
 </body>
 </html>
