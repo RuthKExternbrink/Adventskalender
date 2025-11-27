@@ -272,48 +272,70 @@
   </div>
   <script>
     const doors = document.querySelectorAll('.door');
-    const baseSoundUrl = 'chime.mp3';
+    const baseSoundUrl = 'sounds/ding.mp3'; // <-- hier ggf. deinen Namen einsetzen
   
-    // Semitöne aus der Zahl im Türchen holen (01 → 0, 02 → 1, ...)
+    let audioCtx = null;
+    let audioBuffer = null;
+    let isLoading = false;
+  
     function getSemitonesForDoor(door) {
       const numEl = door.querySelector('.door-number');
       if (!numEl) return 0;
       const n = parseInt(numEl.textContent, 10);
       if (isNaN(n)) return 0;
-      return n - 1; // Tür 1 = 0 Halbtöne, Tür 2 = 1, usw.
+      return n - 1;  // 01 -> 0 HT, 02 -> 1 HT, ..., 24 -> 23 HT
     }
   
-    function playDoorSound(door) {
-      const semitones = getSemitonesForDoor(door);
-      const rate = Math.pow(2, semitones / 12); // 2^(n/12)
+    async function loadBufferOnce() {
+      if (audioBuffer || isLoading) return;
+      isLoading = true;
   
-      const audio = new Audio(baseSoundUrl);
-      audio.playbackRate = rate;     // Pitch + Tempo ändern
-      audio.volume = 1.0;
-      audio.play().catch(() => {
-        // Falls der Browser mal meckert, ignorieren
-      });
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+  
+      const response = await fetch(baseSoundUrl);
+      const arrayBuf = await response.arrayBuffer();
+      audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
+    }
+  
+    async function playDoorSound(door) {
+      try {
+        await loadBufferOnce();
+  
+        if (!audioCtx || !audioBuffer) return;
+  
+        if (audioCtx.state === 'suspended') {
+          await audioCtx.resume();
+        }
+  
+        const semitones = getSemitonesForDoor(door);
+        const rate = Math.pow(2, semitones / 12); // 2^(n/12)
+  
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffer;
+        source.playbackRate.value = rate;
+        source.connect(audioCtx.destination);
+        source.start(0);
+      } catch (err) {
+        console.error('Fehler beim Abspielen:', err);
+      }
     }
   
     doors.forEach(door => {
-      // 🖱 Desktop: Sound beim Hovern am PC
-      if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-        door.addEventListener('mouseenter', () => {
-          playDoorSound(door);
-        });
-      }
+      const handler = (event) => {
+        // bei Klick UND Hover darf Sound kommen
+        // Navigation bei Klick soll trotzdem funktionieren
+        playDoorSound(door);
+      };
   
-          // 📱 Alle Geräte (Desktop + Mobile): Sound beim Klick/Tap
-    door.addEventListener('click', (event) => {
-      event.preventDefault();          // Navigation kurz stoppen
-      playDoorSound(door);
-    
-      const href = door.getAttribute('href');
-      setTimeout(() => {
-        window.location.href = href;   // nach 300 ms weiter
-      }, 300);
-    });
-      });
+      // 📱 + 💻: Sound beim Klick/Tap
+      door.addEventListener('click', handler);
+  
+      // 🖱 Nur auf Geräten mit echtem Hover: zusätzlich bei Hover abspielen
+      if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+        door.addEventListener('mouseenter', handler);
+      }
     });
   </script>
 </body>
