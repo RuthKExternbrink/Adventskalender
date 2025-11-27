@@ -296,18 +296,23 @@
     }
   
     doors.forEach(door => {
-      // 🖱 Desktop: Sound beim Hovern, aber nur wenn es überhaupt Hover gibt
+      // 🖱 Desktop: Sound beim Hovern am PC
       if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
         door.addEventListener('mouseenter', () => {
           playDoorSound(door);
         });
       }
   
-      // 📱 Alle Geräte (Desktop + Mobile): Sound beim Klick/Tap
-      door.addEventListener('click', () => {
-        playDoorSound(door);
-        // Navigation läuft wie gewohnt weiter (Link ganz normal)
-        // Wenn du erst Sound und dann Navigation willst → siehe Kommentar unten 👇
+          // 📱 Alle Geräte (Desktop + Mobile): Sound beim Klick/Tap
+    door.addEventListener('click', (event) => {
+      event.preventDefault();          // Navigation kurz stoppen
+      playDoorSound(door);
+    
+      const href = door.getAttribute('href');
+      setTimeout(() => {
+        window.location.href = href;   // nach 300 ms weiter
+      }, 300);
+    });
       });
     });
   </script>
