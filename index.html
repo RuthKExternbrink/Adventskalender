@@ -272,7 +272,7 @@
   </div>
   <script>
     const doors = document.querySelectorAll('.door');
-    const baseSoundUrl = 'chime.mp3'; // <-- hier ggf. deinen Namen einsetzen
+    const baseSoundUrl = 'chime.mp3'; // <-- hier ggf. anderen Ton einsetzen
   
     let audioCtx = null;
     let audioBuffer = null;
@@ -332,7 +332,7 @@
       // 📱 + 💻: Sound beim Klick/Tap
       door.addEventListener('click', handler);
   
-      // 🖱 Nur auf Geräten mit echtem Hover: zusätzlich bei Hover abspielen
+
       if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
         door.addEventListener('mouseenter', handler);
       }
