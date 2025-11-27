@@ -271,50 +271,45 @@
     </div>
   </div>
   <script>
-    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-
-      const doors = document.querySelectorAll('.door');
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      let buffer = null;  
-
-      fetch('chime.mp3')
-        .then(response => response.arrayBuffer())
-        .then(data => audioContext.decodeAudioData(data))
-        .then(decoded => {
-          buffer = decoded;
-          initDoors();
-        })
-        .catch(err => console.error('Audio konnte nicht geladen werden:', err));
-
-      function playForDoor(index) {
-        if (!buffer) return;  
-
-      // Semitöne: 0 für Tür 1, 1 für Tür 2, ...
-        const semitones = index;
-        const rate = Math.pow(2, semitones / 12); // 2^(n/12)
-
-        const source = audioContext.createBufferSource();
-        source.buffer = buffer;
-        source.playbackRate.value = rate;
-        source.connect(audioContext.destination);
-
-      // iOS braucht manchmal ein Resume nach User-Interaktion
-        if (audioContext.state === 'suspended') {
-          audioContext.resume().then(() => source.start(0));
-        } else {
-          source.start(0);
-        }
-      }
-
-      function initDoors() {
-        doors.forEach((door, index) => {
-          door.addEventListener('mouseenter', () => {
-            playForDoor(index);   // index = 0…23 → immer höher
-          });
-        // Kein Stop nötig: kurzer Sample läuft einfach zu Ende
+    const doors = document.querySelectorAll('.door');
+    const baseSoundUrl = 'chime.mp3';
+  
+    // Semitöne aus der Zahl im Türchen holen (01 → 0, 02 → 1, ...)
+    function getSemitonesForDoor(door) {
+      const numEl = door.querySelector('.door-number');
+      if (!numEl) return 0;
+      const n = parseInt(numEl.textContent, 10);
+      if (isNaN(n)) return 0;
+      return n - 1; // Tür 1 = 0 Halbtöne, Tür 2 = 1, usw.
+    }
+  
+    function playDoorSound(door) {
+      const semitones = getSemitonesForDoor(door);
+      const rate = Math.pow(2, semitones / 12); // 2^(n/12)
+  
+      const audio = new Audio(baseSoundUrl);
+      audio.playbackRate = rate;     // Pitch + Tempo ändern
+      audio.volume = 1.0;
+      audio.play().catch(() => {
+        // Falls der Browser mal meckert, ignorieren
+      });
+    }
+  
+    doors.forEach(door => {
+      // 🖱 Desktop: Sound beim Hovern, aber nur wenn es überhaupt Hover gibt
+      if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+        door.addEventListener('mouseenter', () => {
+          playDoorSound(door);
         });
       }
-    }
+  
+      // 📱 Alle Geräte (Desktop + Mobile): Sound beim Klick/Tap
+      door.addEventListener('click', () => {
+        playDoorSound(door);
+        // Navigation läuft wie gewohnt weiter (Link ganz normal)
+        // Wenn du erst Sound und dann Navigation willst → siehe Kommentar unten 👇
+      });
+    });
   </script>
 </body>
 </html>
