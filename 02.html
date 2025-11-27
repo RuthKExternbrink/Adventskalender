@@ -1,11 +1,32 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Bester Adventskalender ever!</title>
-  </head>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bester Adventskalender ever!</title></title>
+  <link rel="stylesheet" href="style.css">
+</head>
   <body>
-    <audio controls>
-      <source src="dein-audio.wav" type="audio/wav">
-    </audio>
+    <div class="hero">
+      <h1>2. Dezember</h1>
+      <button id="audioButton" class="audio-btn">🎵 Drück mich</button>
+      <audio id="audio" src="02Dezember.wav"></audio>
+    </div>
+    <script>
+      const btn   = document.getElementById('audioButton');
+      const audio = document.getElementById('audio');
+
+      btn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          btn.classList.add('playing');
+          btn.textContent = '⏸ Pause Jingle';
+        } else {
+          audio.pause();
+          btn.classList.remove('playing');
+          btn.textContent = '🎵 Play Jingle';
+        }
+      });
+    </script>
   </body>
 </html>
