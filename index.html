@@ -271,38 +271,50 @@
     </div>
   </div>
   <script>
-    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+<script>
+  if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
 
     const doors = document.querySelectorAll('.door');
-    const baseSoundUrl = 'chime.mp3';
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    let buffer = null;
 
-    doors.forEach((door, index) => {
-      let audio = null;
+    fetch('chime.mp3')
+      .then(response => response.arrayBuffer())
+      .then(data => audioContext.decodeAudioData(data))
+      .then(decoded => {
+        buffer = decoded;
+        initDoors();
+      })
+      .catch(err => console.error('Audio konnte nicht geladen werden:', err));
 
-      door.addEventListener('mouseenter', () => {
-        // index: 0 bis 23
-        const semitones = index; // Tür 1 = 0 HT, Tür 2 = 1 HT, ...
+    function playForDoor(index) {
+      if (!buffer) return;
 
-        // Pitch-Faktor: 2^(n/12)
-        const rate = Math.pow(2, semitones / 12);
+      // Semitöne: 0 für Tür 1, 1 für Tür 2, ...
+      const semitones = index;
+      const rate = Math.pow(2, semitones / 12); // 2^(n/12)
 
-        audio = new Audio(baseSoundUrl);
-        audio.playbackRate = rate;  // erhöht Pitch (und verkürzt Dauer)
-        audio.volume = 1.0;
+      const source = audioContext.createBufferSource();
+      source.buffer = buffer;
+      source.playbackRate.value = rate;
+      source.connect(audioContext.destination);
 
-        audio.play().catch(() => {
-          // Ignorieren, falls Browser mal zickt
+      // iOS braucht manchmal ein Resume nach User-Interaktion
+      if (audioContext.state === 'suspended') {
+        audioContext.resume().then(() => source.start(0));
+      } else {
+        source.start(0);
+      }
+    }
+
+    function initDoors() {
+      doors.forEach((door, index) => {
+        door.addEventListener('mouseenter', () => {
+          playForDoor(index);   // index = 0…23 → immer höher
         });
+        // Kein Stop nötig: kurzer Sample läuft einfach zu Ende
       });
-
-      door.addEventListener('mouseleave', () => {
-        if (audio) {
-          audio.pause();
-          audio.currentTime = 0;
-          audio = null;
-        }
-      });
-    });
+    }
   }
   </script>
 </body>
