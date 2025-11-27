@@ -4,6 +4,6 @@ body {
 }
 
 .player {
+    padding-top: 40%;
     height: 200px;
-    border: solid;
 }
