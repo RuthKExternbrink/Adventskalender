@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Adventskalender 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #fff;
+      /* 🎄 Hintergrundbild austauschen */
+      background:
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)),
+        url("dein-neuer-advent-background.jpg") center/cover no-repeat fixed;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr)); /* immer 2 nebeneinander */
+      gap: 1rem;
+    }
+
+    .door {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.2rem 0.6rem;
+      border-radius: 1rem;
+      text-decoration: none;
+      background: linear-gradient(135deg, #ff4fb7, #ff9fda);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+      overflow: hidden;
+      isolation: isolate;
+      transition:
+        transform 0.15s ease-out,
+        box-shadow 0.15s ease-out,
+        filter 0.15s ease-out;
+    }
+
+    .door-number {
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+
+    .door-label {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      opacity: 0.9;
+    }
+
+    /* Hover-Effekt Tür */
+    .door:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 16px rgba(255, 159, 218, 0.9);
+      filter: brightness(1.1);
+    }
+
+    /* ❄️✨ Glitzer/Schnee aus dem Türchen – Pseudo-Element */
+    .door::after {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      pointer-events: none;
+      opacity: 0;
+      /* mehrere "Flocken" / Glitzerpunkte als Radialverläufe */
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.95) 0, rgba(255,255,255,0.95) 40%, transparent 60%),
+        radial-gradient(circle, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.9) 35%, transparent 60%),
+        radial-gradient(circle, rgba(255,255,255,0.85) 0, rgba(255,255,255,0.85) 35%, transparent 70%),
+        radial-gradient(circle, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.9) 35%, transparent 65%);
+      background-size: 8px 8px, 10px 10px, 6px 6px, 7px 7px;
+      background-position:
+        15% 110%,
+        45% 115%,
+        75% 120%,
+        55% 108%;
+      z-index: -1;
+    }
+
+    .door:hover::after {
+      opacity: 1;
+      animation: snowUp 0.9s ease-out forwards;
+    }
+
+    @keyframes snowUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      70% {
+        transform: translateY(-120%);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150%);
+        opacity: 0;
+      }
+    }
+
+    /* etwas mehr Platz auf größeren Screens */
+    @media (min-width: 700px) {
+      body {
+        padding-top: 3rem;
+      }
+      h1 {
+        font-size: 2.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>Adventskalender 2025</h1>
+    <p class="subtitle">24 Türchen, 24 kleine Überraschungen – klick &amp; glitzer dich durch den Advent ✨</p>
+
+    <div class="calendar">
+      <!-- Türchen 1–24 mit Links -->
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/01.html">
+        <span class="door-number">01</span>
+        <span class="door-label">Türchen 1</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/02.html">
+        <span class="door-number">02</span>
+        <span class="door-label">Türchen 2</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/03.html">
+        <span class="door-number">03</span>
+        <span class="door-label">Türchen 3</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/04.html">
+        <span class="door-number">04</span>
+        <span class="door-label">Türchen 4</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/05.html">
+        <span class="door-number">05</span>
+        <span class="door-label">Türchen 5</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/06.html">
+        <span class="door-number">06</span>
+        <span class="door-label">Nikolaus!</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/07.html">
+        <span class="door-number">07</span>
+        <span class="door-label">Türchen 7</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/08.html">
+        <span class="door-number">08</span>
+        <span class="door-label">Türchen 8</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/09.html">
+        <span class="door-number">09</span>
+        <span class="door-label">Türchen 9</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/10.html">
+        <span class="door-number">10</span>
+        <span class="door-label">Türchen 10</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/11.html">
+        <span class="door-number">11</span>
+        <span class="door-label">Türchen 11</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/12.html">
+        <span class="door-number">12</span>
+        <span class="door-label">Türchen 12</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/13.html">
+        <span class="door-number">13</span>
+        <span class="door-label">Türchen 13</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/14.html">
+        <span class="door-number">14</span>
+        <span class="door-label">Türchen 14</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/15.html">
+        <span class="door-number">15</span>
+        <span class="door-label">Türchen 15</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/16.html">
+        <span class="door-number">16</span>
+        <span class="door-label">Türchen 16</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/17.html">
+        <span class="door-number">17</span>
+        <span class="door-label">Türchen 17</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/18.html">
+        <span class="door-number">18</span>
+        <span class="door-label">Türchen 18</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/19.html">
+        <span class="door-number">19</span>
+        <span class="door-label">Türchen 19</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/20.html">
+        <span class="door-number">20</span>
+        <span class="door-label">Türchen 20</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/21.html">
+        <span class="door-number">21</span>
+        <span class="door-label">Türchen 21</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/22.html">
+        <span class="door-number">22</span>
+        <span class="door-label">Türchen 22</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/23.html">
+        <span class="door-number">23</span>
+        <span class="door-label">Türchen 23</span>
+      </a>
+
+      <a class="door" href="https://RuthKExternbrink.github.io/Adventskalender/24.html">
+        <span class="door-number">24</span>
+        <span class="door-label">Heiligabend ✨</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
