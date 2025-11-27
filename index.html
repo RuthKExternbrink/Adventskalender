@@ -270,5 +270,40 @@
       </a>
     </div>
   </div>
+  <script>
+    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+
+    const doors = document.querySelectorAll('.door');
+    const baseSoundUrl = 'sounds/ding.wav';
+
+    doors.forEach((door, index) => {
+      let audio = null;
+
+      door.addEventListener('mouseenter', () => {
+        // index: 0 bis 23
+        const semitones = index; // Tür 1 = 0 HT, Tür 2 = 1 HT, ...
+
+        // Pitch-Faktor: 2^(n/12)
+        const rate = Math.pow(2, semitones / 12);
+
+        audio = new Audio(baseSoundUrl);
+        audio.playbackRate = rate;  // erhöht Pitch (und verkürzt Dauer)
+        audio.volume = 1.0;
+
+        audio.play().catch(() => {
+          // Ignorieren, falls Browser mal zickt
+        });
+      });
+
+      door.addEventListener('mouseleave', () => {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          audio = null;
+        }
+      });
+    });
+  }
+  </script>
 </body>
 </html>
