@@ -1,0 +1,9 @@
+body {
+    background-image: url('hintergrund.png');
+    /* hier den Namen des Bildes eintragen für den Hintergrund */
+}
+
+.player {
+    height: 200px;
+    border: solid;
+}
