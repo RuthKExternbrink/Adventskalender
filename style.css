@@ -3,7 +3,7 @@
   padding: 0 1.5rem;
   background:
     linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-    url('hintergrund.png') center/cover no-repeat;
+    url('hintergrund.jpg') center/cover no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: center;
