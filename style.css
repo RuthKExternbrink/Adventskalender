@@ -21,12 +21,12 @@
 /* hier kannst du die Farbe ändern. 
   Siehe "Hex-Code-Video" muahaahaha - es changiert zwischen zwei Farben - die mit # beginnen */ 
   
-  background: linear-gradient(135deg, #ff00d9, #ff6cf5);
+  background: linear-gradient(135deg, #36648B, #63B8FF);
   color: #fff;
   font-weight: 700;
   font-size: 1.1rem;
   letter-spacing: 0.03em;
-  box-shadow: 0 0 12px rgba(255, 105, 255, 0.9);
+  box-shadow: 0 0 12px rgba(99,184,255, 0.9);
   cursor: pointer;
   position: relative;
   outline: none;
@@ -36,7 +36,7 @@
 /* kleiner Klick-Effekt */
 .audio-btn:active {
   transform: scale(0.97);
-  box-shadow: 0 0 6px rgba(255, 105, 255, 0.7);
+  box-shadow: 0 0 6px rgba(99,184,255, 0.7);
 }
 
 /* Puls-Effekt wenn spielt */
@@ -48,14 +48,14 @@
 @keyframes pulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 105, 255, 0.9);
+    box-shadow: 0 0 0 0 rgba(99,184,255, 0.9);
   }
   70% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 18px rgba(255, 105, 255, 0);
+    box-shadow: 0 0 0 18px rgba(99,184,255, 0);
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 105, 255, 0);
+    box-shadow: 0 0 0 0 rgba(99,184,255, 0);
   }
 }
